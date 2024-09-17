@@ -5,10 +5,13 @@ function EditForm({setIsUpdateFormHidden,setTasks,tasks,setError,task}) {
 
   const [taskTitle, setTaskTitle] = useState(task.title) ;
   const [taskDescription, setTaskDescription] = useState(task.description);
-  const [dueDate, setDueDate] = useState(task.dueDate);
+  const [dueDate, setDueDate] = useState(task.due_date);
   const [priority, setPriority] = useState(task.priority); 
   const [status, setStatus] = useState(task.status); 
-
+  const formatDate = (date)=>{
+    const formattedDate = new Date(date).toISOString().split('T')[0];
+    return formattedDate;
+  }
 
 
   const handleSubmit = async (e) => {
@@ -21,9 +24,10 @@ function EditForm({setIsUpdateFormHidden,setTasks,tasks,setError,task}) {
       status
     };
     try {
-      const response = await axios.patch(`http://localhost:3500/api/tasks/${task._id}`,newTask);
+      const response = await axios.put(`https://task-manager-api-livid-delta.vercel.app/api/tasks/${task._id}`,newTask);
       setIsUpdateFormHidden(true);
-      setTasks([response.data,...tasks]);
+      const newTasks = tasks.map(task1=> task1._id === task._id ? response.data : task1);
+      setTasks(newTasks);
     } catch (error) {
       setError(error.message);
     }
@@ -70,7 +74,7 @@ function EditForm({setIsUpdateFormHidden,setTasks,tasks,setError,task}) {
             <div className='relative '>
               <input type="date" name="dueDate" id="dueDate" 
                 required
-                value={dueDate}
+                value={formatDate(dueDate)}
                 onChange={(e) => setDueDate(e.target.value)}
                 className="text-black w-[300px] h-[70px] p-2.5 rounded-lg border-2 border-black"
                 />

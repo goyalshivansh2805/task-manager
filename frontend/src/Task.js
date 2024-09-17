@@ -36,7 +36,7 @@ function Task({task,handleDelete,setIsUpdateFormHidden,setError,setEditTask}) {
         }
       };
 
-  const handleEditClick =()=>{
+  const handleEditClick =(task)=>{
       setEditTask(task);
       setIsUpdateFormHidden(false);
   }
@@ -62,7 +62,7 @@ function Task({task,handleDelete,setIsUpdateFormHidden,setError,setEditTask}) {
                 <MdDelete size={50}/>
             </div>
             <div className="h-[50px] w-[50px] absolute top-[80px] right-[30px] cursor-pointer"
-                onClick={()=>{handleEditClick()}}
+                onClick={()=>{handleEditClick(task)}}
                 >
                 <CiEdit size={50}/>
             </div>
