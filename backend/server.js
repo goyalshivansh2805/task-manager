@@ -26,7 +26,7 @@ app.use("/",(req, res) => {
     res.end();
 })
 
-app.use("/api/tasks",require("./api/routes/api/tasks.js"));
+app.use("/api/tasks",require("./routes/api/tasks.js"));
 
 app.use("*",(req,res)=>{
     res.status(404).json({message:"Page not found"});
