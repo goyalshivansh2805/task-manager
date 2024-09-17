@@ -2,9 +2,9 @@ require("dotenv").config();
 const express =require('express');
 const cors = require("cors");
 const mongoose = require('mongoose');
-const connectDB = require("./config/dbConnector");
-const { logger } = require('./middlewares/logEvents');
-const errorHandler = require('./middlewares/errorHandler');
+const connectDB = require("./api/config/dbConnector.js");
+const { logger } = require('./api/middlewares/logEvents.js');
+const errorHandler = require('./api/middlewares/errorHandler.js');
 
 const PORT = process.env.PORT || 3500;
 
@@ -26,7 +26,7 @@ app.use("/",(req, res) => {
     res.end();
 })
 
-app.use("/api/tasks",require("./routes/api/tasks.js"));
+app.use("/api/tasks",require("./api/routes/api/tasks.js"));
 
 app.use("*",(req,res)=>{
     res.status(404).json({message:"Page not found"});
