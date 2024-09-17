@@ -21,11 +21,6 @@ app.use(logger);
 
 app.use(express.urlencoded({extended:true}));
 
-app.use("/",(req, res) => {
-    res.send("Hello from the server!");
-    res.end();
-})
-
 app.use("/api/tasks",require("./routes/api/tasks.js"));
 
 app.use("*",(req,res)=>{
