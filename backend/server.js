@@ -42,5 +42,7 @@ mongoose.connection.on("open",()=>{
     });
 });
 
+export default app;
+
 
 
