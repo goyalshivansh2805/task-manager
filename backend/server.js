@@ -2,9 +2,9 @@ require("dotenv").config();
 const express =require('express');
 const cors = require("cors");
 const mongoose = require('mongoose');
-const connectDB = require("./api/config/dbConnector.js");
-const { logger } = require('./api/middlewares/logEvents.js');
-const errorHandler = require('./api/middlewares/errorHandler.js');
+const connectDB = require("./config/dbConnector.js");
+const { logger } = require('./middlewares/logEvents.js');
+const errorHandler = require('./middlewares/errorHandler.js');
 
 const PORT = process.env.PORT || 3500;
 
