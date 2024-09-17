@@ -62,7 +62,7 @@ function App() {
         params.priority = priority.toLowerCase(); 
       }
 
-      const response = await axios.get("https://task-manager-api-livid-delta.vercel.app/api/tasks", { params });
+      const response = await axios.get("https://task-manager-api-xi-bice.vercel.app/api/tasks", { params });
       
       setTasks(response.data);
 
@@ -89,7 +89,7 @@ function App() {
 
   const handleDelete = async(id)=>{
     try {
-      const task = await axios.delete(`https://task-manager-api-livid-delta.vercel.app/api/tasks/${id}`);
+      const task = await axios.delete(`https://task-manager-api-xi-bice.vercel.app/api/tasks/${id}`);
       if(task.status === 200){
         setTasks(tasks.filter(t=>t._id!== id));
       }

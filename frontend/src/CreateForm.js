@@ -21,7 +21,7 @@ function CreateForm({setIsCreateFormHidden,setTasks,tasks,setError}) {
       status
     };
     try {
-      const response = await axios.post("https://task-manager-api-livid-delta.vercel.app/api/tasks",newTask);
+      const response = await axios.post("https://task-manager-api-xi-bice.vercel.app/api/tasks",newTask);
       setIsCreateFormHidden(true);
       setTasks([response.data,...tasks]);
     } catch (error) {

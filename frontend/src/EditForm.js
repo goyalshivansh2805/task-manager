@@ -24,7 +24,7 @@ function EditForm({setIsUpdateFormHidden,setTasks,tasks,setError,task}) {
       status
     };
     try {
-      const response = await axios.put(`https://task-manager-api-livid-delta.vercel.app/api/tasks/${task._id}`,newTask);
+      const response = await axios.put(`https://task-manager-api-xi-bice.vercel.app/api/tasks/${task._id}`,newTask);
       setIsUpdateFormHidden(true);
       const newTasks = tasks.map(task1=> task1._id === task._id ? response.data : task1);
       setTasks(newTasks);
