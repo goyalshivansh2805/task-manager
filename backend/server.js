@@ -25,7 +25,6 @@ app.use("*",(req,res)=>{
     res.status(404).json({message:"Page not found"});
 });
 
-
 mongoose.connection.on("open",()=>{
     console.log("Connected to Database...");
 
@@ -34,7 +33,7 @@ mongoose.connection.on("open",()=>{
     });
 });
 
-export default app;
+module.exports = app;
 
 
 

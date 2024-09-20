@@ -1,14 +1,24 @@
-import {React,useState} from 'react'
+import {React,useState,useContext,useEffect} from 'react'
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import axios from 'axios';
-function CreateForm({setIsCreateFormHidden,setTasks,tasks,setError}) {
+import { useNavigate } from 'react-router-dom';
+import { TaskContext } from '../context/context';
 
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('Low'); 
-  const [status, setStatus] = useState('Pending'); 
+function EditForm() {
+  
+  const navigate = useNavigate();
+  const {setTasks,tasks,setError,editTask} = useContext(TaskContext);
 
+  const [taskTitle, setTaskTitle] = useState(editTask?.title) ;
+  const [taskDescription, setTaskDescription] = useState(editTask?.description);
+  const [dueDate, setDueDate] = useState(editTask?.due_date);
+  const [priority, setPriority] = useState(editTask?.priority); 
+  const [status, setStatus] = useState(editTask?.status); 
+  const formatDate = (date)=>{
+    if(!date) return null;
+    const formattedDate = new Date(date).toISOString().split('T')[0];
+    return formattedDate;
+  }
 
 
   const handleSubmit = async (e) => {
@@ -21,21 +31,32 @@ function CreateForm({setIsCreateFormHidden,setTasks,tasks,setError}) {
       status
     };
     try {
-      const response = await axios.post("https://task-manager-api-xi-bice.vercel.app/api/tasks",newTask);
-      setIsCreateFormHidden(true);
-      setTasks([response.data,...tasks]);
+      const response = await axios.put(`https://task-manager-api-xi-bice.vercel.app/api/tasks/${editTask._id}`,newTask);
+      const newTasks = tasks.map(task1=> task1._id === editTask._id ? response.data : task1);
+      navigate("/");
+      setTasks(newTasks);
     } catch (error) {
       setError(error.message);
     }
   };
 
+
+  useEffect(() => {
+    if (!editTask) {
+      navigate("/"); 
+    }
+  }, [editTask, navigate]);
   return (
-    <div className="w-full h-[500px] top-[200px] rounded-2xl bg-[#d9d9d9] flex flex-col absolute z-10">
+    <div className='m-auto h-[100vh] w-[1037px] relative'>
+      <div className="h-[146px] w-[100%] mt-10 mx-auto grid place-content-center rounded-3xl bg-[#d9d9d9]">
+          <p className="font-bold text-[43px] ">TASK MANAGER</p>
+      </div>
+      {editTask? <div className="w-full h-[500px] top-[200px] rounded-2xl bg-[#d9d9d9] flex flex-col absolute z-10">
       <div className="grid place-content-center">
         <h1 className="text-[40px] font-bold mt-4">
-          CREATE A NEW TASK
+          EDIT TASK
         </h1>
-        <div className='absolute top-6 right-6 cursor-pointer' onClick={()=>{setIsCreateFormHidden(true)}}>
+        <div className='absolute top-6 right-6 cursor-pointer' onClick={()=>{navigate("/")}}>
 
           <IoIosCloseCircleOutline size={40}/>
         </div>
@@ -70,7 +91,7 @@ function CreateForm({setIsCreateFormHidden,setTasks,tasks,setError}) {
             <div className='relative '>
               <input type="date" name="dueDate" id="dueDate" 
                 required
-                value={dueDate}
+                value={formatDate(dueDate)}
                 onChange={(e) => setDueDate(e.target.value)}
                 className="text-black w-[300px] h-[70px] p-2.5 rounded-lg border-2 border-black"
                 />
@@ -108,14 +129,16 @@ function CreateForm({setIsCreateFormHidden,setTasks,tasks,setError}) {
 
           <div className='h-full w-full absolute top-[350px] left-[44%]'>
             <button type='submit' className="bg-[#7ed957]  text-black hover:bg-[#75c454] h-[70px] w-[150px] mt-[25.6px] rounded-3xl grid place-content-center font-bold text-[19px] cursor-pointer" 
-              >Add</button>
+              >EDIT</button>
           </div>
           
         </form>
       </div>
 
+    </div> : null}
     </div>
+    
   )
 }
 
-export default CreateForm
+export default EditForm

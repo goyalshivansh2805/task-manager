@@ -1,8 +1,12 @@
-import {React , useState} from 'react'
+import {React , useContext, useState} from 'react'
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-import TaskStatus from "./TaskStatus";
-function Task({task,handleDelete,setIsUpdateFormHidden,setError,setEditTask}) {
+import TaskStatus from "./Utility/TaskStatus";
+import { TaskContext } from '../../context/context';
+import { useNavigate } from 'react-router-dom';
+function Task({task}) {
+  const navigate = useNavigate();
+  const {handleDelete,setError,setEditTask} = useContext(TaskContext)
 
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -38,7 +42,7 @@ function Task({task,handleDelete,setIsUpdateFormHidden,setError,setEditTask}) {
 
   const handleEditClick =(task)=>{
       setEditTask(task);
-      setIsUpdateFormHidden(false);
+      navigate("edit");
   }
   return (
     <li className="bg-[#d9d9d9] rounded-2xl w-[95%] mx-auto h-[150px] mt-5 relative mb-5">

@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaSort } from "react-icons/fa";
-import Button from './Button';
-import Select from './Select';
-import Tasks from './Tasks';
-function Main({handleButtonClick,selectedButton,handleOrderChange,error,handleDelete,tasks,handleStatusChange,handlePriorityChange,setIsCreateFormHidden,setError,setIsUpdateFormHidden,setEditTask}) {
+import Button from '../../Utility/Button';
+import Select from '../../Utility/Select';
+import Tasks from "../../Tasks/Tasks";
+import { TaskContext } from '../../../context/context';
+import { useNavigate } from 'react-router-dom';
+function Main() {
+    const navigate = useNavigate();
+
+    const {handleButtonClick,selectedButton,handleOrderChange,error,handleDelete,tasks,handleStatusChange,handlePriorityChange,setError,setEditTask} = useContext(TaskContext);
+
   return (
     <>
       <div className="flex justify-between">
@@ -46,7 +52,9 @@ function Main({handleButtonClick,selectedButton,handleOrderChange,error,handleDe
           handleChange={handlePriorityChange}
           />
 
-          <div onClick={()=>{setIsCreateFormHidden(false)}} className="bg-[#7ed957] text-black hover:bg-[#75c454] h-[70px] w-[150px] mt-[25.6px] rounded-3xl grid place-content-center font-bold text-[19px] cursor-pointer" 
+          <div onClick={()=>{
+            navigate("/create")
+          }} className="bg-[#7ed957] text-black hover:bg-[#75c454] h-[70px] w-[150px] mt-[25.6px] rounded-3xl grid place-content-center font-bold text-[19px] cursor-pointer" 
           >New</div>
       </div>
       
@@ -62,7 +70,7 @@ function Main({handleButtonClick,selectedButton,handleOrderChange,error,handleDe
             No tasks to show
           </p>
         ) : (
-          <Tasks tasks={tasks} handleDelete={handleDelete} error={error} setError={setError} setIsUpdateFormHidden={setIsUpdateFormHidden} setEditTask={setEditTask} />
+          <Tasks tasks={tasks} handleDelete={handleDelete} error={error} setError={setError} setEditTask={setEditTask} />
         )
       } 
 
