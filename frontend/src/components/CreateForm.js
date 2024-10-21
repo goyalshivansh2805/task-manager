@@ -27,7 +27,7 @@ function CreateForm() {
       status
     };
     try {
-      const response = await axios.post("https://task-manager-api-xi-bice.vercel.app/api/tasks",newTask);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/tasks`,newTask);
       setTasks([response.data,...tasks]);
       navigate("/")
     } catch (error) {

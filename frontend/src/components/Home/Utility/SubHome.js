@@ -5,10 +5,15 @@ import Select from '../../Utility/Select';
 import Tasks from "../../Tasks/Tasks";
 import { TaskContext } from '../../../context/context';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext}  from "../../../context/authContext";
 function Main() {
     const navigate = useNavigate();
-
+    const {isLoading , isLoggedIn} = useContext(AuthContext);
     const {handleButtonClick,selectedButton,handleOrderChange,error,handleDelete,tasks,handleStatusChange,handlePriorityChange,setError,setEditTask} = useContext(TaskContext);
+    if(!isLoggedIn) {navigate("/login")};
+    if(isLoading) return <p>Loading...</p>;
+
+    
 
   return (
     <>
@@ -53,7 +58,7 @@ function Main() {
           />
 
           <div onClick={()=>{
-            navigate("/create")
+            navigate("/tasks/create")
           }} className="bg-[#7ed957] text-black hover:bg-[#75c454] h-[70px] w-[150px] mt-[25.6px] rounded-3xl grid place-content-center font-bold text-[19px] cursor-pointer" 
           >New</div>
       </div>

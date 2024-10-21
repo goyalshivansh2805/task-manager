@@ -42,7 +42,7 @@ function Task({task}) {
 
   const handleEditClick =(task)=>{
       setEditTask(task);
-      navigate("edit");
+      navigate("/tasks/edit");
   }
   return (
     <li className="bg-[#d9d9d9] rounded-2xl w-[95%] mx-auto h-[150px] mt-5 relative mb-5">

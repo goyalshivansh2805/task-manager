@@ -31,7 +31,7 @@ function EditForm() {
       status
     };
     try {
-      const response = await axios.put(`https://task-manager-api-xi-bice.vercel.app/api/tasks/${editTask._id}`,newTask);
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/tasks/${editTask._id}`,newTask);
       const newTasks = tasks.map(task1=> task1._id === editTask._id ? response.data : task1);
       navigate("/");
       setTasks(newTasks);
